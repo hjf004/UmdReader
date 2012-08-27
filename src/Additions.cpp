@@ -1,13 +1,24 @@
+#include<QtCore/QtGlobal>           //the Q_OS_LINUX marco seems to be defined in this file
 #include "../include/Additions.h"
-#include<iconv.h>
+#if defined(Q_OS_WIN32)
+#include<Windows.h>     //if on windows
+#elif defined(Q_OS_LINUX)
+#include<iconv.h>       //if on linux
+#endif
 #include<assert.h>
 namespace UMD
 {
 int WideCharToMultiByte(char* des,unsigned char *sr,unsigned long in_byte,unsigned long out_byte)
 {
+    int res;
+#if defined(Q_OS_WIN32)
+    res=::WideCharToMultiByte(CP_ACP,0,(unsigned short*)sr,
+                              in_byte/2,des,MAXBUFFERSIZE,NULL,false);
+#elif defined(Q_OS_LINUX)
     iconv_t icv=iconv_open("UTF-8","UTF-16");
-    int res=iconv(icv,(char**)(&sr),(size_t*)(&in_byte),&des,(size_t*)(&out_byte));
+    res=iconv(icv,(char**)(&sr),(size_t*)(&in_byte),&des,(size_t*)(&out_byte));
     iconv_close(icv);
+#endif
     return res;
 }
 

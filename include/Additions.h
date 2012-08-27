@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 namespace UMD
 {
     int WideCharToMultiByte(char* des,unsigned char* sr,unsigned long in_byte,unsigned long out_byte);
