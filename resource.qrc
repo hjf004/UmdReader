@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resource/pixmap/search.png</file>
+        <file>resource/pixmap/zoom_in.png</file>
+        <file>resource/pixmap/zoom_out.png</file>
+        <file>resource/pixmap/document_open.png</file>
+        <file>resource/pixmap/filesaveas.png</file>
+        <file>resource/pixmap/document_print.png</file>
+        <file>resource/pixmap/select_all.png</file>
+        <file>resource/pixmap/document_copy.png</file>
+    </qresource>
+</RCC>
