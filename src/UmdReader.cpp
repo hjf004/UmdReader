@@ -23,15 +23,15 @@ UmdReader::~UmdReader()
 
 void UmdReader::creatWidget()
 {
-        treeWidget=new QTreeWidget(this);
-        treeWidget->setHeaderLabel(QObject::tr("Chapter List"));
-        treeWidget->setMaximumWidth(240);
+    treeWidget=new QTreeWidget(this);
+    treeWidget->setHeaderLabel(QObject::tr("Chapter List"));
+    treeWidget->setMaximumWidth(240);
 
-        textView=new QTextEdit(this);
-        textView->setReadOnly(true);
+    textView=new QTextEdit(this);
+    textView->setReadOnly(true);
 
-        this->addWidget(treeWidget);
-        this->addWidget(textView);
+    this->addWidget(treeWidget);
+    this->addWidget(textView);
 }
 
 void UmdReader::creatConnection()
