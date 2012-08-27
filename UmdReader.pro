@@ -13,3 +13,4 @@ LIBS += -lz
 
 RESOURCES += \
     resource.qrc
+TRANSLATIONS += lang.ts

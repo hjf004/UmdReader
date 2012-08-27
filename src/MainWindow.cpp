@@ -153,7 +153,7 @@ void MainWindow::creatConnection()
 
 void MainWindow::openFile()
 {
-    QString book=QFileDialog::getOpenFileName(this,QObject::tr("Open a umd book"),QDir::homePath(),QObject::tr("Documents(*.umd *.txt)"));
+    QString book=QFileDialog::getOpenFileName(this,QObject::tr("Open a umd book"),QDir::homePath(),QObject::tr("Documents(*.umd)"));
     if(!book.isEmpty())
         loadFile(book);
 }
@@ -197,7 +197,7 @@ void MainWindow::updateRecentFileActions()
 
     for (int i = 0; i < numRecentFiles; ++i)
     {
-        QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+        QString text = QObject::tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
         recentFileActs[i]->setText(text);
         recentFileActs[i]->setData(files[i]);
         recentFileActs[i]->setVisible(true);

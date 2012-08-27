@@ -9,5 +9,6 @@
         <file>resource/pixmap/select_all.png</file>
         <file>resource/pixmap/document_copy.png</file>
         <file>resource/pixmap/settings.png</file>
+        <file>resource/locale/zh_CN.qm</file>
     </qresource>
 </RCC>
