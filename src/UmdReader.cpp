@@ -115,9 +115,9 @@ QString UmdReader::getTitle()
     return QString();
 }
 
-void UmdReader::showOrHideList()
+void UmdReader::showOrHideList(bool b)
 {
-    treeWidget->setVisible(!(treeWidget->isVisible()));
+   treeWidget->setVisible(b);
 }
 
 QTextDocument* UmdReader::getDocument()

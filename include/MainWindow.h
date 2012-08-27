@@ -28,6 +28,8 @@ private:
 
     QMenu *fileMenu;
     QMenu *editMenu;
+    QMenu *viewMenu;
+    QMenu *helpMenu;
     QAction *openAction;
     QAction *saveAsAction;
     QAction *atrAction;
@@ -42,8 +44,9 @@ private:
     QAction *findNextAction;
     QAction *copyAction;
     QAction *selectAllAction;
+    QAction *toolBarAction;
 
-    bool showOrHide;
+    bool show;
     QString bookName;
     QString searchString;
     QVector<UmdReader*> tabs;
@@ -58,7 +61,7 @@ private slots:
     void zoomOut();
     void findString();
     void findNext();
-    void showOrHideList();
+    void showOrHideList(bool);
     void print();
     void selectAll();
     void onCurrentChanged(int);

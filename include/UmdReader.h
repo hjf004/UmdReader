@@ -12,7 +12,8 @@ public:
     QTextDocument* getDocument();
     QTextEdit* getEdit();
     UMD::UmdParser *getParser();
-    void showOrHideList();
+    void showOrHideList(bool);
+
 private:
     QTreeWidget *treeWidget;
     QTextEdit *textView;

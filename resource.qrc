@@ -8,5 +8,6 @@
         <file>resource/pixmap/document_print.png</file>
         <file>resource/pixmap/select_all.png</file>
         <file>resource/pixmap/document_copy.png</file>
+        <file>resource/pixmap/settings.png</file>
     </qresource>
 </RCC>

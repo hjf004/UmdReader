@@ -3,7 +3,7 @@
 
 MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
-    showOrHide=true;
+    show=true;
     creatAction();
     creatMenubar();
     creatToolbar();
@@ -35,7 +35,10 @@ void MainWindow::creatAction()
         recentFileActs[i]->setVisible(false);
     }
 
-    showOrHideAction=new QAction(this);
+    showOrHideAction=new QAction(QObject::tr("SlideBar"),this);
+    showOrHideAction->setEnabled(false);
+    showOrHideAction->setCheckable(true);
+    showOrHideAction->setChecked(false);
     zoomInAction=new QAction(QIcon(":/resource/pixmap/zoom_in.png"),
                              QObject::tr("Zoom In"),this);
     zoomInAction->setEnabled(false);
@@ -56,6 +59,11 @@ void MainWindow::creatAction()
                            QObject::tr("&Copy"),this);
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
+
+    toolBarAction=new QAction(QIcon(":/resource/pixmap/settings.png"),
+                              QObject::tr("&ToolBar"),this);
+    toolBarAction->setCheckable(true);
+    toolBarAction->setChecked(true);
 }
 void MainWindow::creatMenubar()
 {
@@ -79,8 +87,16 @@ void MainWindow::creatMenubar()
     editMenu->addSeparator();
     editMenu->addAction(findAction);
     editMenu->addAction(findNextAction);
+
+    viewMenu=new QMenu(QObject::tr("&View"),menuBar);
+    viewMenu->addAction(showOrHideAction);
+    viewMenu->addAction(toolBarAction);
+
+    helpMenu=new QMenu(QObject::tr("&Help"),menuBar);
     menuBar->addMenu(fileMenu);
     menuBar->addMenu(editMenu);
+    menuBar->addMenu(viewMenu);
+    menuBar->addMenu(helpMenu);
     setMenuBar(menuBar);
 }
 
@@ -88,8 +104,6 @@ void MainWindow::creatToolbar()
 {
     toolBar=addToolBar(QObject::tr("ToolBar"));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolBar->addAction(showOrHideAction);
-    toolBar->addSeparator();
     toolBar->addAction(openAction);
     toolBar->addAction(saveAsAction);
     toolBar->addAction(printAction);
@@ -129,10 +143,12 @@ void MainWindow::creatConnection()
     connect(zoomOutAction,SIGNAL(triggered()),this,SLOT(zoomOut()));
     connect(findAction,SIGNAL(triggered()),this,SLOT(findString()));
     connect(findNextAction,SIGNAL(triggered()),this,SLOT(findNext()));
-    connect(showOrHideAction,SIGNAL(triggered()),this,SLOT(showOrHideList()));
+    connect(showOrHideAction,SIGNAL(toggled(bool)),this,SLOT(showOrHideList(bool)));
     connect(printAction,SIGNAL(triggered()),this,SLOT(print()));
     connect(selectAllAction,SIGNAL(triggered()),this,SLOT(selectAll()));
     connect(copyAction,SIGNAL(triggered()),this,SLOT(copy()));
+    connect(toolBarAction,SIGNAL(toggled(bool)),toolBar,SLOT(setVisible(bool)));
+    connect(toolBar,SIGNAL(visibilityChanged(bool)),toolBarAction,SLOT(setChecked(bool)));
 }
 
 void MainWindow::openFile()
@@ -213,6 +229,7 @@ void MainWindow::closeTab(int index)
         zoomOutAction->setEnabled(true);
         findAction->setEnabled(true);
         selectAllAction->setEnabled(true);
+        showOrHideAction->setEnabled(true);
     }
     else
     {
@@ -223,6 +240,7 @@ void MainWindow::closeTab(int index)
         zoomOutAction->setEnabled(false);
         findAction->setEnabled(false);
         selectAllAction->setEnabled(false);
+        showOrHideAction->setEnabled(false);
     }
 }
 
@@ -236,6 +254,7 @@ void MainWindow::loadFile(const QString &book)
     int count=tabBar->count();
     tabBar->setCurrentIndex(count-1);
     stackedWidget->setCurrentIndex(count-1);
+    reader->showOrHideList(show);
     setCurrentFile(book);
     QApplication::restoreOverrideCursor();
     if(stackedWidget->count())
@@ -247,6 +266,8 @@ void MainWindow::loadFile(const QString &book)
         zoomOutAction->setEnabled(true);
         findAction->setEnabled(true);
         selectAllAction->setEnabled(true);
+        showOrHideAction->setEnabled(true);
+        showOrHideAction->setChecked(show);
     }
     connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
             copyAction,SLOT(setEnabled(bool)));
@@ -341,11 +362,14 @@ void MainWindow::findNext()
     }
 }
 
-void MainWindow::showOrHideList()
+void MainWindow::showOrHideList(bool b)
 {
     UmdReader *reader=qobject_cast<UmdReader*>(stackedWidget->currentWidget());
     if(reader)
-        reader->showOrHideList();
+    {
+        show=b;
+        reader->showOrHideList(b);
+    }
 }
 
 void MainWindow::print()
@@ -383,6 +407,7 @@ void MainWindow::onCurrentChanged(int index)
     {
         stackedWidget->setCurrentIndex(index);
         reader=qobject_cast<UmdReader*>(stackedWidget->currentWidget());        //current widget
+        reader->showOrHideList(show);
         connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
                 copyAction,SLOT(setEnabled(bool)));
         connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
