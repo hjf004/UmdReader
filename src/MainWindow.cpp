@@ -47,6 +47,7 @@ void MainWindow::creatAction()
     zoomOutAction->setEnabled(false);
     findAction=new QAction(QIcon(":/resource/pixmap/search.png"),
                            QObject::tr("&Search"),this);
+    findAction->setShortcut(QKeySequence::Find);
     findAction->setEnabled(false);
     findNextAction=new QAction(QObject::tr("Search Next"),this);
     findNextAction->setShortcut(QKeySequence::FindNext);
@@ -255,20 +256,21 @@ void MainWindow::loadFile(const QString &book)
     tabBar->setCurrentIndex(count-1);
     stackedWidget->setCurrentIndex(count-1);
     reader->showOrHideList(show);
+    QString title("UmdReader--");
+    title.append(reader->getTitle());
+    setWindowTitle(title);
     setCurrentFile(book);
     QApplication::restoreOverrideCursor();
-    if(stackedWidget->count())
-    {
-        atrAction->setEnabled(true);
-        saveAsAction->setEnabled(true);
-        printAction->setEnabled(true);
-        zoomInAction->setEnabled(true);
-        zoomOutAction->setEnabled(true);
-        findAction->setEnabled(true);
-        selectAllAction->setEnabled(true);
-        showOrHideAction->setEnabled(true);
-        showOrHideAction->setChecked(show);
-    }
+
+    atrAction->setEnabled(true);
+    saveAsAction->setEnabled(true);
+    printAction->setEnabled(true);
+    zoomInAction->setEnabled(true);
+    zoomOutAction->setEnabled(true);
+    findAction->setEnabled(true);
+    selectAllAction->setEnabled(true);
+    showOrHideAction->setEnabled(true);
+    showOrHideAction->setChecked(show);
     connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
             copyAction,SLOT(setEnabled(bool)));
     connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
@@ -405,9 +407,12 @@ void MainWindow::onCurrentChanged(int index)
     }
     if(stackedWidget->count())
     {
+        QString title("UmdReader--");
         stackedWidget->setCurrentIndex(index);
         reader=qobject_cast<UmdReader*>(stackedWidget->currentWidget());        //current widget
         reader->showOrHideList(show);
+        title.append(reader->getTitle());
+        setWindowTitle(title);                                                  //change window title when read another document
         connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
                 copyAction,SLOT(setEnabled(bool)));
         connect(reader->getEdit(),SIGNAL(copyAvailable(bool)),
