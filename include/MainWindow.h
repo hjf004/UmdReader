@@ -7,6 +7,7 @@ class MainWindow:public QMainWindow
     Q_OBJECT
 public:
     MainWindow(QWidget *parent=0);
+    void loadFile(const QString &);
 private:
     void creatWidget();
     void creatAction();
@@ -56,7 +57,6 @@ private slots:
     void showAttribute();
     void saveAs();
     void closeTab(int index);
-    void loadFile(const QString &);
     void zoomIn();
     void zoomOut();
     void findString();

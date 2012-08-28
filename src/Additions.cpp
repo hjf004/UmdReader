@@ -1,4 +1,9 @@
-#include<QtCore/QtGlobal>           //the Q_OS_LINUX marco seems to be defined in this file
+#include<QtCore/QtGlobal>
+/*
+ *the Q_OS_LINUX and Q_OS_WIN32 marco is defined in Qt/QtGloabal.
+  If you don't want to include this header,you can define the marco
+  yourself in diffrent platform.
+ */
 #include "../include/Additions.h"
 #if defined(Q_OS_WIN32)
 #include<Windows.h>     //if on windows

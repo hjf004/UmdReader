@@ -122,7 +122,14 @@ Day:	%5
 Gender:	%6
 Publisher:	%7
 Vendor:	%8</source>
-        <translation type="unfinished">书名:\t%1\n作者:\t%2\n年份:\t%3\n月份:\t%4\n日期:\t%5\n分类:\t%6\n出版商:\t%7\n 零售商:\t%8 </translation>
+        <translation type="unfinished">书名:          %1
+作者:          %2
+年份:          %3
+月份:          %4
+日期:          %5
+分类:          %6
+出版商:        %7
+零售商:        %8</translation>
     </message>
     <message>
         <location filename="src/MainWindow.cpp" line="296"/>
