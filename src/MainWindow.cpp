@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     creatToolbar();
     creatWidget();
     creatConnection();
-    setWindowFilePath(QString());
 }
 
 void MainWindow::creatAction()
@@ -170,7 +169,6 @@ void MainWindow::openRecentFile()
 void MainWindow::setCurrentFile(const QString &fileName)
 {
     bookName = fileName;
-    setWindowFilePath(bookName);
 
     QSettings settings;
     QStringList files = settings.value("recentFileList").toStringList();
