@@ -223,6 +223,10 @@ void MainWindow::closeTab(int index)
     delete reader;
     if(stackedWidget->count())
     {
+        reader=qobject_cast<UmdReader*>(stackedWidget->currentWidget());
+        QString title("UmdReader--");
+        title.append(reader->getTitle());
+        setWindowTitle(title);
         saveAsAction->setEnabled(true);
         atrAction->setEnabled(true);
         printAction->setEnabled(true);
@@ -234,6 +238,7 @@ void MainWindow::closeTab(int index)
     }
     else
     {
+        setWindowTitle("UmdReader");
         saveAsAction->setEnabled(false);
         atrAction->setEnabled(false);
         printAction->setEnabled(false);
