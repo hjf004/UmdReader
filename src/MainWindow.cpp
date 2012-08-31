@@ -1,5 +1,6 @@
 #include"../include/MainWindow.h"
 #include"../include/Additions.h"
+#include"../include/aboutdialog.h"
 
 MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
@@ -64,6 +65,10 @@ void MainWindow::creatAction()
                               QObject::tr("&ToolBar"),this);
     toolBarAction->setCheckable(true);
     toolBarAction->setChecked(true);
+
+    QStyle *style=this->style();
+    QIcon aboutIcon=style->standardIcon(QStyle::SP_MessageBoxInformation);
+    aboutAction=new QAction(aboutIcon,QObject::tr("About"),this);
 }
 void MainWindow::creatMenubar()
 {
@@ -93,6 +98,7 @@ void MainWindow::creatMenubar()
     viewMenu->addAction(toolBarAction);
 
     helpMenu=new QMenu(QObject::tr("&Help"),menuBar);
+    helpMenu->addAction(aboutAction);
     menuBar->addMenu(fileMenu);
     menuBar->addMenu(editMenu);
     menuBar->addMenu(viewMenu);
@@ -149,6 +155,7 @@ void MainWindow::creatConnection()
     connect(copyAction,SIGNAL(triggered()),this,SLOT(copy()));
     connect(toolBarAction,SIGNAL(toggled(bool)),toolBar,SLOT(setVisible(bool)));
     connect(toolBar,SIGNAL(visibilityChanged(bool)),toolBarAction,SLOT(setChecked(bool)));
+    connect(aboutAction,SIGNAL(triggered()),this,SLOT(about()));
 }
 
 void MainWindow::openFile()
@@ -162,7 +169,7 @@ void MainWindow::openRecentFile()
 {
     QAction *act=qobject_cast<QAction*>(sender());
     QString book=act->data().toString();
-    if(act&&(!book.isEmpty()))
+    if(act&&QFile::exists(book))
         loadFile(book);
 }
 
@@ -196,10 +203,18 @@ void MainWindow::updateRecentFileActions()
 
     for (int i = 0; i < numRecentFiles; ++i)
     {
-        QString text = QObject::tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
-        recentFileActs[i]->setText(text);
-        recentFileActs[i]->setData(files[i]);
-        recentFileActs[i]->setVisible(true);
+        if(QFile::exists(files[i]))
+        {
+            QString text = QObject::tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+            recentFileActs[i]->setText(text);
+            recentFileActs[i]->setData(files[i]);
+            recentFileActs[i]->setVisible(true);
+        }
+        else
+        {
+            files.takeAt(i);                //if the file dosen't exists anymore,remove it from list
+            --numRecentFiles;
+        }
     }
     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
         recentFileActs[j]->setVisible(false);
@@ -428,4 +443,11 @@ void MainWindow::copy()
     UmdReader *reader=qobject_cast<UmdReader*>(stackedWidget->currentWidget());
     if(reader)
         reader->getEdit()->copy();
+}
+
+void MainWindow::about()
+{
+    AboutDialog *dialog=new AboutDialog();
+    dialog->exec();
+    delete dialog ;
 }

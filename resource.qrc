@@ -10,5 +10,6 @@
         <file>resource/pixmap/document_copy.png</file>
         <file>resource/pixmap/settings.png</file>
         <file>resource/locale/zh_CN.qm</file>
+        <file>resource/pixmap/umdreader_128.png</file>
     </qresource>
 </RCC>

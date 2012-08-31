@@ -46,7 +46,7 @@ private:
     QAction *copyAction;
     QAction *selectAllAction;
     QAction *toolBarAction;
-
+    QAction *aboutAction;
     bool show;
     QString bookName;
     QString searchString;
@@ -66,6 +66,7 @@ private slots:
     void selectAll();
     void onCurrentChanged(int);
     void copy();
+    void about();
 };
 
 #endif // MAINWINDOW_H

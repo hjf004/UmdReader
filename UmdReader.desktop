@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=UmdReader
+Name[zh_CN]=UMD文档阅读器
+Comment=UMD Document Reader
+Comment[zh_CN]=查看多页UMD文档
+TryExec=umdreader
+Exec=umdreader %U
+StartupNotify=true
+Terminal=false
+Type=Application
+Icon=umdreader.png
+Categories=Office;Viewer;Other
+MimeType=application/umd
