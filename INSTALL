@@ -1,0 +1,6 @@
+To compile and install this program,you should have the Qt develop environment  at first,then just run commands below:
+1)qmake
+2)make
+3)make install
+UmdReader will be installed with the prefix /usr/local.If you want it to be installed with diffrent prefix,you can edit the UmdReader.pro file yourself.
+
