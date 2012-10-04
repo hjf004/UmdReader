@@ -18,7 +18,7 @@ int WideCharToMultiByte(char* des,unsigned char *sr,unsigned long in_byte,unsign
     int res;
 #if defined(Q_OS_WIN32)
     res=::WideCharToMultiByte(CP_ACP,0,(unsigned short*)sr,
-                              in_byte/2,des,MAXBUFFERSIZE,NULL,false);
+                              in_byte/2,des,out_byte,NULL,false);
 #elif defined(Q_OS_LINUX)
     iconv_t icv=iconv_open("UTF-8","UTF-16");
     res=iconv(icv,(char**)(&sr),(size_t*)(&in_byte),&des,(size_t*)(&out_byte));
