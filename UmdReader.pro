@@ -15,14 +15,18 @@ FORMS += \
 
 TRANSLATIONS += lang.ts
 
-LIBS += -lz
-
 TARGET = umdreader
 DESTDIR = bin
 RESOURCES += \
     resource.qrc
 
+win32 {
+INCLUDEPATH += win32/zlib
+LIBS +=-Lwin32/zlib/zlib
+}
+
 unix {
+LIBS += -lz
 target.files = bin/umdreader
 target.path = /usr/local/bin
 locale_zh.files = resource/locale/zh_CN.qm
