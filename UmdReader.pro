@@ -2,14 +2,16 @@ HEADERS += include/Additions.h \
            include/UmdParser.h \
            include/MainWindow.h \
            include/UmdReader.h \
-           include/aboutdialog.h
+           include/aboutdialog.h \
+           include/bookmarkwidget.h
 
 SOURCES += src/UmdParser.cpp \
            src/Additions.cpp \
            src/main.cpp \
            src/MainWindow.cpp \
            src/UmdReader.cpp \
-           src/aboutdialog.cpp
+           src/aboutdialog.cpp \
+           src/bookmarkwidget.cpp
 FORMS += \
     form/aboutdialog.ui
 

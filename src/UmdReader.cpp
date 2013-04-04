@@ -7,6 +7,7 @@
 UmdReader::UmdReader(const QString name, QWidget *parent):QSplitter(parent)
 {
     bookName=name;
+    creatParser();
     creatWidget();
     readChapters();
     readDataBlocks();
@@ -30,7 +31,17 @@ void UmdReader::creatWidget()
     textView=new QTextEdit(this);
     textView->setReadOnly(true);
 
-    this->addWidget(treeWidget);
+    groupBox=new QGroupBox(this);
+    vboxLayout=new QVBoxLayout(groupBox);
+    bookMarkWidget=new BookMarkWidget(getTitle(),groupBox);
+    bookMarkWidget->setTextEdit(textView);
+    bookMarkWidget->setMaximumWidth(240);
+
+    vboxLayout->addWidget(treeWidget);
+    vboxLayout->addWidget(bookMarkWidget);
+    groupBox->setLayout(vboxLayout);
+    groupBox->setMaximumWidth(240);
+    this->addWidget(groupBox);
     this->addWidget(textView);
 }
 
@@ -38,6 +49,18 @@ void UmdReader::creatConnection()
 {
     connect(treeWidget,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this,SLOT(findChapter(QTreeWidgetItem*,QTreeWidgetItem*)));
+}
+
+int UmdReader::creatParser()
+{
+    if(!bookName.isEmpty())
+    {
+        parser=new UMD::UmdParser();
+        QByteArray byteStr(bookName.toAscii());
+        return(parser->Parse(byteStr.data()));
+    }
+    else
+        return -1;
 }
 
 void UmdReader::readChapters()
@@ -117,7 +140,17 @@ QString UmdReader::getTitle()
 
 void UmdReader::showOrHideList(bool b)
 {
-   treeWidget->setVisible(b);
+    treeWidget->setVisible(b);
+}
+
+void UmdReader::showChapterList(bool b)
+{
+    treeWidget->setVisible(b);
+}
+
+void UmdReader::showBookMarkList(bool b)
+{
+    bookMarkWidget->setVisible(b);
 }
 
 QTextDocument* UmdReader::getDocument()
@@ -133,4 +166,9 @@ QTextEdit* UmdReader::getEdit()
 UMD::UmdParser* UmdReader::getParser()
 {
     return parser;
+}
+
+BookMarkWidget* UmdReader::getBookMarkManager()
+{
+    return bookMarkWidget;
 }

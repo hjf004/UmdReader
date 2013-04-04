@@ -87,9 +87,9 @@ void UmdParser::ReadAdditional(short id, unsigned int check, unsigned int length
             type = 0;
             cover=new Cover(Cover::gif,m_pCurrent,length);
         }
-//        FILE *image = fopen(imagepath[type], "wb");
-//        fwrite(m_pCurrent,1,length,image);
-//        fclose(image);
+        //        FILE *image = fopen(imagepath[type], "wb");
+        //        fwrite(m_pCurrent,1,length,image);
+        //        fclose(image);
     }
         break;
     case 0x83:
@@ -100,7 +100,7 @@ void UmdParser::ReadAdditional(short id, unsigned int check, unsigned int length
         {
             m_pChapOffset[i] = *((unsigned int*)m_pCurrent + i);
         }
-//        printf("Chapter Count:",m_nChapLen);
+        //        printf("Chapter Count:",m_nChapLen);
     }
         break;
     case 0x84:

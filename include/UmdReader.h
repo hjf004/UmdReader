@@ -2,6 +2,8 @@
 #define UMDREADER_H
 #include<QtGui>
 #include"../include/UmdParser.h"
+#include"../include/bookmarkwidget.h"
+
 class UmdReader:public QSplitter
 {
     Q_OBJECT
@@ -11,11 +13,17 @@ public:
     QString getTitle();
     QTextDocument* getDocument();
     QTextEdit* getEdit();
+    BookMarkWidget* getBookMarkManager();
     UMD::UmdParser *getParser();
     void showOrHideList(bool);
+    void showChapterList(bool);
+    void showBookMarkList(bool);
 
 private:
+    QGroupBox *groupBox;
+    QVBoxLayout *vboxLayout;
     QTreeWidget *treeWidget;
+    BookMarkWidget *bookMarkWidget;
     QTextEdit *textView;
     QTextDocument *doc;
 
@@ -23,6 +31,7 @@ private:
     QMap<QString,unsigned int> index;
     UMD::UmdParser *parser;
 
+    int creatParser();
     void creatWidget();
     void creatConnection();
     void readChapters();

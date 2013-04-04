@@ -3,6 +3,8 @@
 int main(int argc,char **argv)
 {
     QApplication app(argc,argv);
+    app.setApplicationName("UmdReader");
+    app.setOrganizationName("SMTNT");
 #if defined(Q_OS_LINUX)
     {
         QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));

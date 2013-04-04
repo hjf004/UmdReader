@@ -7,6 +7,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->iconLabel->setPixmap(QPixmap(":/resource/pixmap/umdreader_128.png"));
+    this->setFixedSize(this->width(),this->height());
     connect(ui->pushButton,SIGNAL(clicked()),this,SLOT(close()));
 }
 

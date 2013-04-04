@@ -25,7 +25,7 @@ private:
     void ReadSection(short id, unsigned char b, unsigned char length);
     void ReadAdditional(short id, unsigned int check, unsigned int length);
     int ParseHeader();
-//    int ParseContent();
+    //    int ParseContent();
 
     void FreeMemory();
     FILE *m_pUMDFile;
